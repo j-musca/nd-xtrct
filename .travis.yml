@@ -6,7 +6,7 @@ deploy:
   user: muecke.jo@googlemail.com
   password:
     secure: VozUtTl7D37+rds/+WHHV0bW4S7IITXAPjyr8vCHXOUM66vbb4Y+CPvOD5fl4FqMJOjXKWBZMAVlYb4XaE7o0Zgf2KcDoNoKvYEeR6hWfpRHD3WMr1EZMo9C7ufD0c2gtYahTvWPSQtVr+CKEj8WTpK7VkkDV5MVTUCeY8UEW7E=
-  app: extract
-  domain: extractor-musca.rhcloud.com/
+  app: extractor
+  domain: extractor-musca
   on:
     repo: j-musca/nd-xtrct
