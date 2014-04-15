@@ -21,7 +21,6 @@ describe("GET /", function() {
         .expect('"hello world"')
         .end(function(err, res){
           if (err) return done(err);
-          console.log(res);
           done();
         });
     })
