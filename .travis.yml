@@ -7,6 +7,6 @@ deploy:
   password:
     secure: VozUtTl7D37+rds/+WHHV0bW4S7IITXAPjyr8vCHXOUM66vbb4Y+CPvOD5fl4FqMJOjXKWBZMAVlYb4XaE7o0Zgf2KcDoNoKvYEeR6hWfpRHD3WMr1EZMo9C7ufD0c2gtYahTvWPSQtVr+CKEj8WTpK7VkkDV5MVTUCeY8UEW7E=
   app: extractor
-  domain: http://musca.rhcloud.com
+  domain: musca
   on:
     repo: j-musca/nd-xtrct
