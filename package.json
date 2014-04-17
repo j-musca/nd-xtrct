@@ -17,10 +17,10 @@
   },
   "homepage": "https://github.com/j-musca/nd-xtrct",
   "dependencies": {
-    "restify": "^2.7.0",
-    "mongoose": "^3.8.8",
-    "supertest": "^0.11.0",
-    "mocha": "^1.18.2",
+    "restify": "*",
+    "mongoose": "*",
+    "supertest": "*",
+    "mocha": "*",
     "should": "*"
   }
 }
