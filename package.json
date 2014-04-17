@@ -2,9 +2,9 @@
   "name": "nd-xtrct",
   "version": "0.0.1",
   "description": "Extracts different information.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node app.js",
     "test": "mocha"
   },
   "repository": {
