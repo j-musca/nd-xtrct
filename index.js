@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/bin/env node
 
 var ip_address = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
 var port    = process.env.OPENSHIFT_NODEJS_PORT || "8080";
@@ -16,7 +16,7 @@ if (process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
 
 var serverFactory = require("./server");
 
-var server = serverFactory.createServer()
+var server = serverFactory.createServer();
 
 server.listen(port, ip_address, function() {
   console.log("%s listening at %s", server.name, server.url);

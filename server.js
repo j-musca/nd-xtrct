@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/bin/env node
 var restify = require("restify");
 
 function helloWorldRespond(req, res, next) {

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 var request = require("supertest");
-var should = require("should")
-var server = require("./server").createServer();
+var should = require("should");
+var server = require("../server").createServer();
 
 describe("GET /", function() {
   it("respond with status code 200", function (done) {
@@ -14,7 +14,7 @@ describe("GET /", function() {
         if (err) return done(err);
         done();
       });
-  })
+  });
 
   it("respond with json format", function (done) {
     request(server)
@@ -25,7 +25,7 @@ describe("GET /", function() {
         if (err) return done(err);
         done();
       });
-  })
+  });
 
   it("respond contains object with property 'hello' and value 'world'", function (done) {
     request(server)
@@ -36,5 +36,5 @@ describe("GET /", function() {
         res.body.should.have.property("hello", "world");
         done();
       });
-  })
-})
+  });
+});
