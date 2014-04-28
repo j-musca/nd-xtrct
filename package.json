@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "mocha"
+    "test": "mocha --recursive"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,11 @@
     "mongoose": "*",
     "supertest": "*",
     "mocha": "*",
-    "should": "*"
+    "should": "*",
+    "fast-feed": "*",
+    "redwrap": "*",
+    "twit": "*",
+    "coveralls": "*",
+    "mocha-lcov-reporter": "*"
   }
 }

@@ -3,6 +3,9 @@
 var request = require("supertest");
 var should = require("should");
 var server = require("../server").createServer();
+var mongoose = require("mongoose");
+
+mongoose.connect('mongodb://localhost/test');
 
 describe("GET /", function() {
   it("respond with status code 200", function (done) {
