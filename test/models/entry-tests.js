@@ -19,6 +19,8 @@ describe("Entry", function() {
     it("can save a rss source", function(done){
         var rssSource = InformationSource.createRssSource("rss", "http://link.de");
 
+        rssSource.save(addEntry);
+
         function addEntry(error, savedRssSource) {
             if (error) {
                 return done(error);
@@ -39,7 +41,5 @@ describe("Entry", function() {
                 done();
             }
         }
-
-        rssSource.save(addEntry);
     });
 });
