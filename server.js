@@ -7,10 +7,10 @@ function helloWorldRespond(reqest, response, next) {
 }
 
 function twitterConfig(reqest, response, next) {
-    var config = { accessToken : process.env.TWITTER_ACCESS_TOKEN,
-    accessTokenSecret : process.env.TWITTER_ACCESS_TOKEN_SECRET,
-    consumerKey : process.env.TWITTER_CONSUMER_KEY,
-    consumerKeySecret : process.env.TWITTER_CONSUMER_SECRET };
+    var config = { accessToken : process.env.TWITTER_ACCESS_TOKEN || "NOT SET",
+    accessTokenSecret : process.env.TWITTER_ACCESS_TOKEN_SECRET || "NOT SET",
+    consumerKey : process.env.TWITTER_CONSUMER_KEY || "NOT SET",
+    consumerKeySecret : process.env.TWITTER_CONSUMER_SECRET || "NOT SET" };
 
     response.send(config);
     next();
