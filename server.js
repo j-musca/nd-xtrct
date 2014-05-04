@@ -1,26 +1,33 @@
 #!/bin/env node
 var restify = require("restify");
 
-function helloWorldRespond(req, res, next) {
-  res.send({"hello": "world"});
+function helloWorldRespond(reqest, response, next) {
+  response.send({"hello": "world"});
   next();
+}
+
+function twitterConfig(reqest, response, next) {
+    var config = { accessToken : process.env.TWITTER_ACCESS_TOKEN,
+    accessTokenSecret : process.env.TWITTER_ACCESS_TOKEN_SECRET,
+    consumerKey : process.env.TWITTER_CONSUMER_KEY,
+    consumerKeySecret : process.env.TWITTER_CONSUMER_SECRET };
+
+    response.send(config);
+    next();
 }
 
 function createServer() {
     var server = restify.createServer();
 
-    // Ensure we don"t drop data on uploads
     server.pre(restify.pre.pause());
-    // Clean up sloppy paths like
     server.pre(restify.pre.sanitizePath());
-    // Handles annoying user agents (curl)
     server.pre(restify.pre.userAgentConnection());
-    // Use the common stuff you probably want
     server.use(restify.acceptParser(server.acceptable));
     server.use(restify.gzipResponse());
     server.use(restify.queryParser());
 
     server.get("/", helloWorldRespond);
+    server.get("/twitterConfig", twitterConfig);
 
     return server;
 }

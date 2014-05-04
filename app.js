@@ -28,6 +28,14 @@ server.listen(port, ip_address, function() {
   console.log("%s listening at %s", server.name, server.url);
 });
 
+var TwitterConnector = require('./connectors/twitter-connector');
+var twitterConfig = {consumerKey: 'GrpVl0hZO8KnEdGOYCuGg',
+    consumerSecret: 'MN9Dy1KEBdjJag4FO5pWuBcNQTijKWvAsg372jZRKk',
+    accessToken: '222181295-8IDy5W3lDWTliYudSXZRTn9F7a6QFk4FkuDIe6iM',
+    accessTokenSecret: 'OD65ksZNIpOI54AHiuWn3wxdD2bfAphEehu8D62Nro'};
+var twitterConnector = new TwitterConnector(twitterConfig);
+twitterConnector.getNewestEntries("programming", "j_musca");
+
 //var rss = require("./connectors/rss-connector")
 //
 //rss.getNewestEntries("http://rss.golem.de/rss.php?feed=ATOM1.0", function(error, entries) {
