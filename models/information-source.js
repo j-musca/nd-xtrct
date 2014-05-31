@@ -33,12 +33,16 @@ var InformationSource = function() {
     function _createRedditSource(name, subRedditName) {
         return new _model({ name: name,
             connectionData: { subRedditName: subRedditName },
-            lastEntryData: { newestEntryDate: null },
+            lastEntryData: { newestEntryUTCTimestamp: null },
             type: "REDDIT" })
     }
 
     function _getInformationSources(callback) {
         _model.find({}).exec(callback);
+    }
+
+    function _remove(id, callback)  {
+        _model.remove({id: id}, callback);
     }
 
     return {
@@ -47,7 +51,8 @@ var InformationSource = function() {
         createTwitterSource: _createTwitterSource,
         createRssSource: _createRssSource,
         createRedditSource: _createRedditSource,
-        getInformationSources: _getInformationSources
+        getInformationSources: _getInformationSources,
+        remove: _remove
     }
 }();
 
