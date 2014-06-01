@@ -3,7 +3,7 @@ var restify = require("restify");
 var InformationSource = require("./models/information-source");
 
 function helloWorldRespond(request, response, next) {
-    response.send({"hello": "world"});
+    response.send({"version": "0.7"});
     next();
 }
 

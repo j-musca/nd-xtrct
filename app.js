@@ -80,6 +80,6 @@ var Job = require("./jobs/job");
 var connectorService = new ConnectorService();
 var entryService = new EntryService();
 var readerService = new ReaderService(connectorService.getConnectors(), entryService.saveEntries);
-var readerJob = new Job(10, readerService);
+var readerJob = new Job(60 * 5, readerService);
 
 readerJob.startJob();
