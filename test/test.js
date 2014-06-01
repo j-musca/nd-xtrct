@@ -36,7 +36,7 @@ describe("GET /", function() {
       .set("Accept", "application/json")
       .end(function(err, res){
         if (err) return done(err);
-        res.body.should.have.property("hello", "world");
+        res.body.should.have.property("version");
         done();
       });
   });
