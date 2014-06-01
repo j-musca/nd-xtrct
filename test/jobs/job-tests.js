@@ -24,6 +24,7 @@ describe("A job", function() {
     });
 
     it("can run 3 seconds", function(done) {
+        this.timeout(5000);
         var threeSeconds = 3;
         var counter = 0;
         var callback = function() {
