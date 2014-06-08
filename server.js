@@ -1,9 +1,10 @@
 #!/bin/env node
 var restify = require("restify");
 var InformationSource = require("./models/information-source");
+var startUpTime = new Date();
 
-function helloWorldRespond(request, response, next) {
-    response.send({"version": "0.7"});
+function versionInfo(request, response, next) {
+    response.send({"version": "0.7", "startUpTime": startUpTime});
     next();
 }
 
@@ -46,13 +47,25 @@ function deleteInformationSource(request, response, next) {
         if (error) {
             return next(new restify.InvalidArgumentError(error.toString()))
         } else {
-            response.send({"id": model.id});
+            response.send({"id": id});
             next();
         }
     });
 }
 
 function createServer() {
+    var jobInterval = 60 * 5; // 5 minutes
+    var ConnectorService = require("./services/connector-service");
+    var EntryService = require("./services/entry-service");
+    var ReaderService = require("./services/reader-service");
+    var Job = require("./jobs/job");
+
+    var connectorService = new ConnectorService();
+    var entryService = new EntryService();
+    var readerService = new ReaderService(connectorService.getConnectors(), entryService.saveEntries);
+    var readerJob = new Job(jobInterval, readerService);
+
+    readerJob.startJob();
     var server = restify.createServer();
 
     server.pre(restify.pre.pause());
@@ -64,11 +77,11 @@ function createServer() {
     server.use(restify.queryParser());
     server.use(restify.bodyParser());
 
-    server.get("/", helloWorldRespond);
+    server.get("/", versionInfo);
     server.post("/twitterSource", createTwitterSource);
     server.post("/redditSource", createRedditSource);
     server.post("/rssSource", createRssSource);
-    server.del("/source", deleteInformationSource);
+    server.post("/source", deleteInformationSource);
 
     return server;
 }

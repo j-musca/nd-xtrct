@@ -15,6 +15,29 @@ var InformationSource = function() {
 
     var _model = mongoose.model('informationSources', informationSourceSchema);
 
+    _model.schema.path('connectionData').validate(function (value) {
+        var rules = {"TWITTER": ["slug", "ownerName"],
+            "REDDIT": ["subRedditName"],
+            "RSS": ["url"]};
+        var typeRules = rules[this.type] || [];
+        return isMixedValid(value, typeRules);
+    }, 'Invalid connectionData');
+
+    function isMixedValid(mixed, expectedFields) {
+        var isValid = true;
+
+        for (var i in expectedFields) {
+            var expectedField = expectedFields[i];
+            var value = mixed[expectedField];
+            if (value === undefined || value === null) {
+                isValid = false;
+            }
+        }
+
+        return isValid;
+    }
+
+
     function _createTwitterSource(name, slug, ownerName) {
         return new _model({ name: name,
             connectionData: { slug: slug, ownerName: ownerName },
@@ -42,7 +65,7 @@ var InformationSource = function() {
     }
 
     function _remove(id, callback)  {
-        _model.remove({id: id}, callback);
+        _model.findAndRemove(id, callback);
     }
 
     return {
