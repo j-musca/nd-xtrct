@@ -43,12 +43,16 @@ function saveInformationSource(informationSource, response, next) {
 
 function deleteInformationSource(request, response, next) {
     var id = request.params.id;
-    InformationSource.remove(id, function(error, model) {
+    InformationSource.remove(id, function(error, numberAffectedDocuments) {
         if (error) {
             return next(new restify.InvalidArgumentError(error.toString()))
         } else {
-            response.send({"id": id});
-            next();
+            if (numberAffectedDocuments === 0) {
+                return next(new restify.InvalidArgumentError("No document with this id exists."))
+            } else {
+                response.send({"id": id});
+                next();
+            }
         }
     });
 }

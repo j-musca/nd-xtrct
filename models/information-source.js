@@ -65,7 +65,7 @@ var InformationSource = function() {
     }
 
     function _remove(id, callback)  {
-        _model.findAndRemove(id, callback);
+        _model.find({_id: id}).remove(callback);
     }
 
     return {
