@@ -1,30 +1,30 @@
 /**
  * Created by jonas on 01.05.14.
  */
-var RedditConnector = function() {
-    var reddit = require("redwrap");
+var RedditConnector = function(redditConnection) {
+    var connection = redditConnection;
 
-    this.getNewestEntries = function(informationSource, callback) {
-        var subRedditName = informationSource.connectionData.subRedditName;
+    this.getNewestEntries = function(informationSource, processingCallback) {
+        connection.get(informationSource, handleResponse);
 
-        reddit.r(subRedditName, function(error, data, response) {
+        function handleResponse(error, redditEntries) {
             if (error) {
                 console.log("Error during reddit read: " + error);
-                transformToEntries(informationSource, [], callback);
+                transformToEntries(informationSource, [], processingCallback);
             } else {
-                var entries = getNewEntries(data["data"]["children"], informationSource);
+                var entries = getNewEntries(redditEntries, informationSource);
                 console.log("Got " + entries.length + " new entries for source " + informationSource.name);
-                transformToEntries(informationSource, entries, callback);
+                transformToEntries(informationSource, entries, processingCallback);
                 updateInformationSource(informationSource, entries);
             }
-        });
+        }
 
         function getNewEntries(entries, informationSource) {
             var utcTimestamp = informationSource.lastEntryData.newestEntryUTCTimestamp;
 
             if (utcTimestamp !== null) {
                 return entries.filter(function(entry) {
-                    return entry.created_utc > utcTimestamp;
+                    return entry.data.created_utc > utcTimestamp;
                 });
             } else {
                 return entries;

@@ -1,39 +1,23 @@
 /**
  * Created by jonas on 01.05.14.
  */
-var RssConnector = function() {
-    var http = require("http");
-    var rssParser = require("fast-feed");
+var RssConnector = function(rssConnection) {
+    var connection = rssConnection;
 
-    this.getNewestEntries = function(informationSource, callback) {
-        var url = informationSource.connectionData.url;
+    this.getNewestEntries = function(informationSource, processingCallback) {
+        connection.get(informationSource, handleResponse);
 
-        http.get(url, function(response) {
-            var result = "";
-
-            response.on("data", function (chunk) {
-                result += chunk;
-            });
-
-            response.on("end", function () {
-                rssParser.parse(result, function(error, feed) {
-                    if (error) {
-                        console.log("Error during rss read: " + error);
-                        transformToEntries(informationSource, [], callback);
-                    } else {
-                        var entries = getNewEntries(feed.items, informationSource);
-                        console.log("Got " + entries.length + " new entries for source " + informationSource.name);
-                        transformToEntries(informationSource, entries, callback);
-                        updateInformationSource(informationSource, entries);
-                    }
-                });
-            });
-
-            response.on("error", function (error) {
+        function handleResponse(error, rssEntries) {
+            if (error) {
                 console.log("Error during rss read: " + error);
-                callback([]);
-            });
-        });
+                transformToEntries(informationSource, [], processingCallback);
+            } else {
+                var entries = getNewEntries(rssEntries, informationSource);
+                console.log("Got " + entries.length + " new entries for source " + informationSource.name);
+                transformToEntries(informationSource, entries, processingCallback);
+                updateInformationSource(informationSource, entries);
+            }
+        }
 
         function getNewEntries(entries, informationSource) {
             var newestDate = informationSource.lastEntryData.newestEntryDate;

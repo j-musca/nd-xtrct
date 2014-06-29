@@ -2,7 +2,6 @@
  * Created by jonas on 18.05.14.
  */
 
-
 var should = require("should");
 var ReaderService = require("../../services/reader-service");
 var InformationSource = require("../../models/information-source");
@@ -50,7 +49,7 @@ describe("A reader service", function() {
         var readerService = new ReaderService({"TWITTER": dummyConnector});
 
         var callback = function(entries) {
-            entries.should.be.have.length(3);
+            entries.should.have.length(3);
             done();
         };
 

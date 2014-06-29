@@ -2,35 +2,22 @@
  * Created by jonas on 01.05.14.
  */
 
-var TwitterConnector = function(twitterConfig) {
-    var Twit = require("twit");
+var TwitterConnector = function(twitterConnection) {
+    var connection = twitterConnection;
 
-    var twitterClient = new Twit({
-        consumer_key: twitterConfig.consumerKey,
-        consumer_secret: twitterConfig.consumerKeySecret,
-        access_token: twitterConfig.accessToken,
-        access_token_secret: twitterConfig.accessTokenSecret
-    });
+    this.getNewestEntries = function(informationSource, processingCallback) {
+        connection.get(informationSource, handleResponse);
 
-    this.getNewestEntries = function(informationSource, callback) {
-        var slug = informationSource.connectionData.slug;
-        var owner = informationSource.connectionData.ownerName;
-        var params = {"slug": slug, "owner_screen_name": owner, "include_entities": true};
-
-        if (informationSource.lastEntryData.tweetId !== null) {
-            params["since_id"] = informationSource.lastEntryData.tweetId
-        }
-
-        twitterClient.get("lists/statuses", params, function(error, entries) {
+        function handleResponse(error, entries) {
             if (error) {
                 console.log("Error during twitter read: " + error);
-                transformToEntries(informationSource, [], callback);
+                transformToEntries(informationSource, [], processingCallback);
             } else {
                 console.log("Got " + entries.length + " new entries for source " + informationSource.name);
-                transformToEntries(informationSource, entries, callback);
+                transformToEntries(informationSource, entries, processingCallback);
                 updateInformationSource(informationSource, entries);
             }
-        });
+        }
 
         function findMaxId(newestId, currentEntry) {
             if (newestId === null) {
