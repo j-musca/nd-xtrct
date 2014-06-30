@@ -60,11 +60,11 @@ var Entry = function() {
             source: source })
     }
 
-    function _getEntrys(callback) {
+    function _getEntries(callback) {
         getEntriesWithParams({}, callback);
     }
 
-    function _getEntrysAfterCollectionDate(collectionDate, callback) {
+    function _getEntriesAfterCollectionDate(collectionDate, callback) {
         getEntriesWithParams({ collectionDate: { $gte: collectionDate } }, callback);
     }
 
@@ -81,7 +81,7 @@ var Entry = function() {
                     mappedInformationSources[informationSource.id] = informationSource;
                 });
 
-                _model.find(params).exec(function(error, entries) {
+                _model.find(params).sort("collectionDate", -1).limit(500).exec(function(error, entries) {
                     if (error) {
                         callback(error, entries);
                     } else {
@@ -93,7 +93,6 @@ var Entry = function() {
                 });
             }
         });
-
     }
 
     return {
@@ -102,8 +101,8 @@ var Entry = function() {
         createEntryFromTwitter: _createEntryFromTwitter,
         createEntryFromRss: _createEntryFromRss,
         createEntryFromReddit: _createEntryFromReddit,
-        getEntries: _getEntrys,
-        getEntriesAfterCollectionDate: _getEntrysAfterCollectionDate
+        getEntries: _getEntries,
+        getEntriesAfterCollectionDate: _getEntriesAfterCollectionDate
     }
 }();
 
