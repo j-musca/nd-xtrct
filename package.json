@@ -27,6 +27,8 @@
     "twit": "*",
     "coveralls": "*",
     "mocha-lcov-reporter": "*",
+    "gulp": "*",
+    "date-utils": "*",
     "istanbul": "*"
   }
 }

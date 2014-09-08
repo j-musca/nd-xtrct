@@ -69,7 +69,7 @@ function deleteInformationSource(request, response, next) {
 }
 
 function createServer() {
-    var jobInterval = 5//60 * 5; // 5 minutes
+    var jobInterval = 5;//60 * 5; // 5 minutes
     var ConnectorService = require("./services/connector-service");
     var EntryService = require("./services/entry-service");
     var ReaderService = require("./services/reader-service");
@@ -81,12 +81,6 @@ function createServer() {
     var readerJob = new Job(jobInterval, readerService);
 
     readerJob.startJob();
-
-    var redditSource = InformationSource.createRedditSource("reddit", "programming");
-
-    redditSource.save(function(error, model) {
-        console.log("Saved " + model);
-    });
 
     var server = restify.createServer();
 
