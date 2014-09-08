@@ -41,6 +41,17 @@ function saveInformationSource(informationSource, response, next) {
     });
 }
 
+function listInformationSources(request, response, next) {
+    InformationSource.getInformationSources( function (error, informationSources) {
+        if (error) {
+            console.log("Could not load information sources for entries.")
+            response.send({"sources": []});
+        } else {
+            response.send({"sources": informationSources});
+        }
+    });
+}
+
 function deleteInformationSource(request, response, next) {
     var id = request.params.id;
     InformationSource.remove(id, function(error, numberAffectedDocuments) {
@@ -92,6 +103,7 @@ function createServer() {
     server.post("/twitterSource", createTwitterSource);
     server.post("/redditSource", createRedditSource);
     server.post("/rssSource", createRssSource);
+    server.get("/list", listInformationSources);
     server.post("/source", deleteInformationSource);
 
     return server;
